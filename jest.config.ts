@@ -215,7 +215,8 @@ const config: Config = {
     '-fixture.ts',
     '.input.ts',
     '.d.ts',
-    '.module.ts'
+    '.module.ts',
+    'main.ts',
   ],
   coverageThreshold: {
     global: {
