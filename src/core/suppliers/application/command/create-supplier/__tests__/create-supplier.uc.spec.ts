@@ -7,6 +7,7 @@ describe('Create supplier unit test', () => {
         const supplierRepository = {
             saveSupplier: jest.fn(),
             updateSupplier: jest.fn(),
+            exists: jest.fn(),
         }
         const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository);
         const supplier: CreateSupplierCommand = {

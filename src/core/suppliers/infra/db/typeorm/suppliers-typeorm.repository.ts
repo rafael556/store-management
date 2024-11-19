@@ -26,16 +26,20 @@ export class SupplierTypeOrmRepository implements ISupplierRepository {
         }   
     }
 
-    async updateSupplier(supplierId: string, supplier: Supplier): Promise<void> {
-        const exists = await this.repository.exists({where: {supplierId}});
-
-        if (!exists) {
-            throw new Error('Supplier not found');
-        }
-        
+    async updateSupplier(supplierId: string, supplier: Supplier): Promise<void> {       
         const supplierEntity = SupplierMapper.toModel(supplier);
         supplierEntity.supplierUpdatedAt = new Date();
-        
-        await this.repository.update(supplierId, supplierEntity);
+
+        try {
+            await this.repository.update(supplierId, supplierEntity);
+        } catch (error) {
+            Logger.error(`Error updating supplier: ${error}`, error.stack, 'SupplierTypeOrmRepository');
+            throw new Error('Error updating supplier');
+        }
+    }
+
+    async exists(supplierId: string): Promise<boolean> {
+        const supplier = await this.repository.exists({where: {supplierId}});
+        return !!supplier;
     }
 }

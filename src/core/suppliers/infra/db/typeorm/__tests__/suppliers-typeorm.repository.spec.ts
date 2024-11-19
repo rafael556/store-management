@@ -68,9 +68,7 @@ describe('SupplierTypeOrmRepository Integration Test', () => {
     // Assert
     expect(async () => {
       await repository.saveSupplier(supplier);
-    }).rejects.toThrow(
-      new Error('Error saving supplier'),
-    );
+    }).rejects.toThrow(new Error('Error saving supplier'));
   });
 
   it('should save and retrieve supplier with updated name', async () => {
@@ -111,12 +109,59 @@ describe('SupplierTypeOrmRepository Integration Test', () => {
       isActive: true,
     });
 
+    const supplier2 = new Supplier({
+      supplierId: new Uuid(),
+      name: 'Supplier Name 2',
+      telephone: '123456789',
+      socialMedia: 'socialMedia2',
+      isActive: true,
+    });
+
     // Act
     await repository.saveSupplier(supplier);
 
+    await repository.saveSupplier(supplier2);
+
+    supplier2.changeSocialMedia('socialMedia');
     // Assert
-    await expect(async () => {
-      await repository.updateSupplier('non-existing-id', supplier);
-    }).rejects.toThrow('Supplier not found');
+    expect(async () => {
+      await repository.updateSupplier(supplier2.entityId.id, supplier2);
+    }).rejects.toThrow(new Error('Error updating supplier'));
+  });
+
+  it('should return true when supplier exists', async () => {
+    // Arrange
+    const supplier = new Supplier({
+      supplierId: new Uuid(),
+      name: 'Supplier Name',
+      telephone: '123456789',
+      socialMedia: 'socialMedia',
+      isActive: true,
+    });
+
+    // Act
+    await repository.saveSupplier(supplier);
+    const exists = await repository.exists(supplier.entityId.id);
+
+    // Assert
+    expect(exists).toBe(true);
+  });
+
+  it('should return false when supplier does not exist', async () => {
+    // Arrange
+    const supplier = new Supplier({
+      supplierId: new Uuid(),
+      name: 'Supplier Name',
+      telephone: '123456789',
+      socialMedia: 'socialMedia',
+      isActive: true,
+    });
+
+    // Act
+    await repository.saveSupplier(supplier);
+    const exists = await repository.exists('non-existing-id');
+
+    // Assert
+    expect(exists).toBe(false);
   });
 });

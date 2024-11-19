@@ -12,7 +12,7 @@ export class SupplierEntity {
     @Column({nullable: false})
     supplierTelephone: string;
 
-    @Column({nullable: false})
+    @Column({nullable: false, unique: true})
     supplierSocialMedia: string;
 
     @Column({nullable: false})
