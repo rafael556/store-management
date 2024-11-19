@@ -1,7 +1,10 @@
-import { Uuid } from "src/core/shared/domain/value-objects/uuid.vo";
-import { UpdateSupplierCommand, UpdateSupplierResult } from "../update-supplier.uc.dto";
-import { Supplier } from "src/core/suppliers/domain/supplier.aggregate";
-import UpdateSupplierUseCase from "../update-supplier.uc";
+import { Uuid } from 'src/core/shared/domain/value-objects/uuid.vo';
+import {
+  UpdateSupplierCommand,
+  UpdateSupplierResult,
+} from '../update-supplier.uc.dto';
+import { Supplier } from 'src/core/suppliers/domain/supplier.aggregate';
+import UpdateSupplierUseCase from '../update-supplier.uc';
 
 describe('Update supplier unit test', () => {
   it('should update supplier', async () => {
@@ -10,6 +13,8 @@ describe('Update supplier unit test', () => {
       saveSupplier: jest.fn(),
       updateSupplier: jest.fn(),
       exists: jest.fn().mockReturnValue(true),
+      findSupplier: jest.fn(),
+      listSuppliers: jest.fn(),
     };
 
     const newSupplier = new Supplier({
@@ -21,7 +26,7 @@ describe('Update supplier unit test', () => {
     });
 
     const updateSupplierUseCase = new UpdateSupplierUseCase(supplierRepository);
-    const supplierInput :UpdateSupplierCommand = {
+    const supplierInput: UpdateSupplierCommand = {
       id: newSupplier.entityId.id,
       name: 'New Supplier Name',
       telephone: '987654321',
@@ -29,7 +34,8 @@ describe('Update supplier unit test', () => {
       isActive: false,
     };
 
-    const updatedSupplier: UpdateSupplierResult = await updateSupplierUseCase.execute(supplierInput);
+    const updatedSupplier: UpdateSupplierResult =
+      await updateSupplierUseCase.execute(supplierInput);
 
     // Assert
     expect(supplierRepository.updateSupplier).toHaveBeenCalledTimes(1);
@@ -40,32 +46,34 @@ describe('Update supplier unit test', () => {
     expect(updatedSupplier.isActive).toBe(false);
   });
 
-    it('should throw error when supplier not found', async () => {
-        // Arrange
-        const supplierRepository = {
-        saveSupplier: jest.fn(),
-        updateSupplier: jest.fn().mockImplementation(() => {
-            throw new Error('Supplier not found');
-        }),
-        exists: jest.fn().mockReturnValue(false),
-        };
-    
-        const updateSupplierUseCase = new UpdateSupplierUseCase(supplierRepository);
-        const supplierInput :UpdateSupplierCommand = {
-        id: new Uuid().id,
-        name: 'New Supplier Name',
-        telephone: '987654321',
-        socialMedia: 'newSocialMedia',
-        isActive: false,
-        };
-    
-        // Act
-        try {
-        await updateSupplierUseCase.execute(supplierInput);
-        } catch (error) {
-        // Assert
-        expect(error).toBeDefined();
-        expect(error.message).toBe('Supplier not found');
-        }
-    });
+  it('should throw error when supplier not found', async () => {
+    // Arrange
+    const supplierRepository = {
+      saveSupplier: jest.fn(),
+      updateSupplier: jest.fn().mockImplementation(() => {
+        throw new Error('Supplier not found');
+      }),
+      exists: jest.fn().mockReturnValue(false),
+      findSupplier: jest.fn(),
+      listSuppliers: jest.fn(),
+    };
+
+    const updateSupplierUseCase = new UpdateSupplierUseCase(supplierRepository);
+    const supplierInput: UpdateSupplierCommand = {
+      id: new Uuid().id,
+      name: 'New Supplier Name',
+      telephone: '987654321',
+      socialMedia: 'newSocialMedia',
+      isActive: false,
+    };
+
+    // Act
+    try {
+      await updateSupplierUseCase.execute(supplierInput);
+    } catch (error) {
+      // Assert
+      expect(error).toBeDefined();
+      expect(error.message).toBe('Supplier not found');
+    }
+  });
 });

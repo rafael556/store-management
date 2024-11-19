@@ -1,13 +1,16 @@
+import { ISupplierRepository } from "src/core/suppliers/domain/supplier.repository.interface";
 import { CreateSupplierUseCase } from "../create-supplier.uc";
 import { CreateSupplierCommand } from "../create-supplier.uc.dto";
 
 describe('Create supplier unit test', () => {
     it('should create a supplier', async () => {
         // Arrange
-        const supplierRepository = {
+        const supplierRepository: ISupplierRepository = {
             saveSupplier: jest.fn(),
             updateSupplier: jest.fn(),
             exists: jest.fn(),
+            findSupplier: jest.fn(),
+            listSuppliers: jest.fn(),
         }
         const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository);
         const supplier: CreateSupplierCommand = {
@@ -33,6 +36,9 @@ describe('Create supplier unit test', () => {
         const supplierRepository = {
             saveSupplier: jest.fn().mockRejectedValue(new Error('Error saving supplier')),
             updateSupplier: jest.fn(),
+            exists: jest.fn(),
+            findSupplier: jest.fn(),
+            listSuppliers: jest.fn(),
         }
         const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository);
         const supplier: CreateSupplierCommand = {

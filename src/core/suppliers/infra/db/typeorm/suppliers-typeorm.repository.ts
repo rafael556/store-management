@@ -42,4 +42,14 @@ export class SupplierTypeOrmRepository implements ISupplierRepository {
         const supplier = await this.repository.exists({where: {supplierId}});
         return !!supplier;
     }
+
+    async findSupplier(supplierId: string): Promise<Supplier> {
+        const supplier = await this.repository.findOne({where: {supplierId}});
+        return SupplierMapper.toDomain(supplier);
+    }
+
+    async listSuppliers(): Promise<Supplier[]> {
+        const suppliers = await this.repository.find();
+        return suppliers.map(SupplierMapper.toDomain);
+    }
 }

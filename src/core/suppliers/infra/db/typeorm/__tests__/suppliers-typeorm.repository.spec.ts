@@ -164,4 +164,62 @@ describe('SupplierTypeOrmRepository Integration Test', () => {
     // Assert
     expect(exists).toBe(false);
   });
+
+  it('should return supplier by id', async () => {
+    // Arrange
+    const supplier = new Supplier({
+      supplierId: new Uuid(),
+      name: 'Supplier Name',
+      telephone: '123456789',
+      socialMedia: 'socialMedia',
+      isActive: true,
+    });
+
+    // Act
+    await repository.saveSupplier(supplier);
+    const savedSupplier = await repository.findSupplier(supplier.entityId.id);
+
+    // Assert
+    expect(savedSupplier).toBeDefined();
+    expect(savedSupplier.name).toBe('Supplier Name');
+    expect(savedSupplier.telephone).toBe('123456789');
+    expect(savedSupplier.socialMedia).toBe('socialMedia');
+    expect(savedSupplier.isActive()).toBe(true);
+  });
+
+  it('should return all suppliers', async () => {
+    // Arrange
+    const supplier1 = new Supplier({
+      supplierId: new Uuid(),
+      name: 'Supplier Name 1',
+      telephone: '123456789',
+      socialMedia: 'socialMedia1',
+      isActive: true,
+    });
+
+    const supplier2 = new Supplier({
+      supplierId: new Uuid(),
+      name: 'Supplier Name 2',
+      telephone: '123456789',
+      socialMedia: 'socialMedia2',
+      isActive: true,
+    });
+
+    // Act
+    await repository.saveSupplier(supplier1);
+    await repository.saveSupplier(supplier2);
+    const suppliers = await repository.listSuppliers();
+
+    // Assert
+    expect(suppliers).toHaveLength(2);
+    expect(suppliers[0].name).toBe('Supplier Name 1');
+    expect(suppliers[0].socialMedia).toBe('socialMedia1');
+    expect(suppliers[0].isActive()).toBe(true);
+    expect(suppliers[0].telephone).toBe('123456789');
+
+    expect(suppliers[1].name).toBe('Supplier Name 2');
+    expect(suppliers[1].socialMedia).toBe('socialMedia2');
+    expect(suppliers[1].isActive()).toBe(true);
+    expect(suppliers[1].telephone).toBe('123456789');
+  });
 });
