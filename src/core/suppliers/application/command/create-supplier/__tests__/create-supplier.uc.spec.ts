@@ -1,5 +1,5 @@
 import { CreateSupplierUseCase } from "../create-supplier.uc";
-import { CreateSupplierInputDto } from "../create-suppliers.uc.dto";
+import { CreateSupplierCommand } from "../create-suppliers.uc.dto";
 
 describe('Create supplier unit test', () => {
     it('should create a supplier', async () => {
@@ -9,7 +9,7 @@ describe('Create supplier unit test', () => {
             updateSupplier: jest.fn(),
         }
         const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository);
-        const supplier: CreateSupplierInputDto = {
+        const supplier: CreateSupplierCommand = {
             name: 'Supplier Name',
             telephone: '123456789',
             socialMedia: 'socialMedia',
@@ -34,7 +34,7 @@ describe('Create supplier unit test', () => {
             updateSupplier: jest.fn(),
         }
         const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository);
-        const supplier: CreateSupplierInputDto = {
+        const supplier: CreateSupplierCommand = {
             name: 'Supplier Name',
             telephone: '123456789',
             socialMedia: 'socialMedia',

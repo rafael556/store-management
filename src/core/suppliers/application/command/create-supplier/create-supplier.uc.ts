@@ -1,12 +1,13 @@
 import { Supplier } from "src/core/suppliers/domain/supplier.aggregate";
-import { CreateSupplierInputDto, CreateSupplierOutputDto } from "./create-suppliers.uc.dto";
+import { CreateSupplierCommand, CreateSupplierResult } from "./create-suppliers.uc.dto";
 import { Uuid } from "src/core/shared/domain/value-objects/uuid.vo";
 import { ISupplierRepository } from "src/core/suppliers/domain/supplier.repository.interface";
+import { CommandHandler } from "src/core/shared/application/command-handler.interface";
 
-export class CreateSupplierUseCase {
+export class CreateSupplierUseCase implements CommandHandler<CreateSupplierCommand, CreateSupplierResult> {
     constructor(private readonly supplierRepository: ISupplierRepository) {}
 
-    async execute(input: CreateSupplierInputDto): Promise<CreateSupplierOutputDto> {
+    async execute(input: CreateSupplierCommand): Promise<CreateSupplierResult> {
         const supplier = new Supplier({
             supplierId: new Uuid(),
             name: input.name,

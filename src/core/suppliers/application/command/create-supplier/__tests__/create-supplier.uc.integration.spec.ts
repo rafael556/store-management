@@ -4,7 +4,7 @@ import { SupplierTypeOrmRepository } from "src/core/suppliers/infra/db/typeorm/s
 import { SupplierEntity } from "src/core/suppliers/infra/db/typeorm/suppliers.entity";
 import { DataSource } from "typeorm";
 import { CreateSupplierUseCase } from "../create-supplier.uc";
-import { CreateSupplierInputDto, CreateSupplierOutputDto } from "../create-suppliers.uc.dto";
+import { CreateSupplierCommand, CreateSupplierResult } from "../create-suppliers.uc.dto";
 import { ISupplierRepository } from "src/core/suppliers/domain/supplier.repository.interface";
 
 describe('CreateSupplier Integration Test', () => {
@@ -36,14 +36,14 @@ describe('CreateSupplier Integration Test', () => {
 
   it('should save and retrieve supplier', async () => {
     // Arrange
-    const supplier: CreateSupplierInputDto = {
+    const supplier: CreateSupplierCommand = {
         name: 'Supplier Name',
         telephone: '123456789',
         socialMedia: 'socialMedia',
     }
 
     // Act
-    const newSupplier: CreateSupplierOutputDto = await createSupplierUseCase.execute(supplier);
+    const newSupplier: CreateSupplierResult = await createSupplierUseCase.execute(supplier);
     const savedSupplier = await dataSource
       .getRepository(SupplierEntity)
       .findOne({ where: { supplierName: 'Supplier Name' } });
@@ -59,7 +59,7 @@ describe('CreateSupplier Integration Test', () => {
 
     it('should throw error when saving supplier with existing name', async () => {
         // Arrange
-        const supplier: CreateSupplierInputDto = {
+        const supplier: CreateSupplierCommand = {
             name: 'Supplier Name',
             telephone: '123456789',
             socialMedia: 'socialMedia',

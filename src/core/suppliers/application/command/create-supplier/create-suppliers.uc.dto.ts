@@ -1,10 +1,10 @@
-export type CreateSupplierInputDto = {
+export type CreateSupplierCommand = {
   name: string;
   telephone: string;
   socialMedia: string;
 };
 
-export type CreateSupplierOutputDto = {
+export type CreateSupplierResult = {
   supplierId: string;
   name: string;
   telephone: string;
