@@ -1,5 +1,5 @@
 import { Supplier } from "src/core/suppliers/domain/supplier.aggregate";
-import { CreateSupplierCommand, CreateSupplierResult } from "./create-suppliers.uc.dto";
+import { CreateSupplierCommand, CreateSupplierResult } from "./create-supplier.uc.dto";
 import { Uuid } from "src/core/shared/domain/value-objects/uuid.vo";
 import { ISupplierRepository } from "src/core/suppliers/domain/supplier.repository.interface";
 import { CommandHandler } from "src/core/shared/application/command-handler.interface";

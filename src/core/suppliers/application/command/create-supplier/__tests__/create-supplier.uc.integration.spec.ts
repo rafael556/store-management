@@ -4,7 +4,7 @@ import { SupplierTypeOrmRepository } from "src/core/suppliers/infra/db/typeorm/s
 import { SupplierEntity } from "src/core/suppliers/infra/db/typeorm/suppliers.entity";
 import { DataSource } from "typeorm";
 import { CreateSupplierUseCase } from "../create-supplier.uc";
-import { CreateSupplierCommand, CreateSupplierResult } from "../create-suppliers.uc.dto";
+import { CreateSupplierCommand, CreateSupplierResult } from "../create-supplier.uc.dto";
 import { ISupplierRepository } from "src/core/suppliers/domain/supplier.repository.interface";
 
 describe('CreateSupplier Integration Test', () => {

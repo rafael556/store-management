@@ -1,5 +1,5 @@
 import { CreateSupplierUseCase } from "../create-supplier.uc";
-import { CreateSupplierCommand } from "../create-suppliers.uc.dto";
+import { CreateSupplierCommand } from "../create-supplier.uc.dto";
 
 describe('Create supplier unit test', () => {
     it('should create a supplier', async () => {
