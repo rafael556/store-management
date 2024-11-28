@@ -25,11 +25,13 @@ describe('List suppliers use case unit test', () => {
         });
 
         const repository: ISupplierRepository = {
-            saveSupplier: jest.fn(),
-            updateSupplier: jest.fn(),
+            insert: jest.fn(),
+            update: jest.fn(),
             exists: jest.fn().mockReturnValue(true),
-            findSupplier: jest.fn(),
-            listSuppliers: jest.fn().mockResolvedValueOnce([supplier1, supplier2]),
+            findById: jest.fn(),
+            findAll: jest.fn().mockResolvedValueOnce([supplier1, supplier2]),
+            search: jest.fn(),
+            sortableFields: [],
         }
 
         const usecase = new ListSuppliersUseCase(repository);
@@ -59,11 +61,13 @@ describe('List suppliers use case unit test', () => {
         // Arrange
 
         const repository: ISupplierRepository = {
-            saveSupplier: jest.fn(),
-            updateSupplier: jest.fn(),
+            insert: jest.fn(),
+            update: jest.fn(),
             exists: jest.fn().mockReturnValue(true),
-            findSupplier: jest.fn(),
-            listSuppliers: jest.fn().mockResolvedValueOnce([]),
+            findById: jest.fn(),
+            findAll: jest.fn().mockResolvedValueOnce([]),
+            search: jest.fn(),
+            sortableFields: [],
         }
 
         const usecase = new ListSuppliersUseCase(repository);

@@ -14,7 +14,7 @@ export default class DetailSupplierUseCase implements QueryHandler<DetailSupplie
             throw new Error('Supplier not found');
         }
 
-        const supplier = await this.supplierRepository.findSupplier(query.supplierId);
+        const supplier = await this.supplierRepository.findById(query.supplierId);
 
         return {
             supplierId: supplier.entityId.id,

@@ -52,8 +52,8 @@ describe('List suppliers use case integration test', () => {
       isActive: true,
     });
 
-    await repository.saveSupplier(supplier1);
-    await repository.saveSupplier(supplier2);
+    await repository.insert(supplier1);
+    await repository.insert(supplier2);
 
     // Act
     const suppliers = await useCase.execute();

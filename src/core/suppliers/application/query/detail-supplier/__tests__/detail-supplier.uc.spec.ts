@@ -17,17 +17,19 @@ describe('detail supplier use case unit test', () => {
         });
 
         const repository: ISupplierRepository = {
-            saveSupplier: jest.fn(),
-            updateSupplier: jest.fn(),
+            insert: jest.fn(),
+            update: jest.fn(),
             exists: jest.fn().mockReturnValue(true),
-            findSupplier: jest.fn().mockResolvedValueOnce(supplier),
-            listSuppliers: jest.fn(),
+            findById: jest.fn().mockResolvedValueOnce(supplier),
+            findAll: jest.fn(),
+            search: jest.fn(),
+            sortableFields: [],
         }
 
         const usecase = new DetailSupplierUseCase(repository);
 
         // Act
-        await repository.saveSupplier(supplier);
+        await repository.insert(supplier);
         const savedSupplier = await usecase.execute({supplierId: supplier.entityId.id});
 
         // Assert
@@ -43,11 +45,13 @@ describe('detail supplier use case unit test', () => {
         const supplierId = new Uuid();
 
         const repository: ISupplierRepository = {
-            saveSupplier: jest.fn(),
-            updateSupplier: jest.fn(),
+            insert: jest.fn(),
+            update: jest.fn(),
             exists: jest.fn().mockResolvedValueOnce(false),
-            findSupplier: jest.fn().mockReturnValue(null),
-            listSuppliers: jest.fn(),
+            findById: jest.fn().mockReturnValue(null),
+            findAll: jest.fn(),
+            search: jest.fn(),
+            sortableFields: [],
         }
 
         const usecase = new DetailSupplierUseCase(repository);

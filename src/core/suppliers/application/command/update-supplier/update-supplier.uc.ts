@@ -23,7 +23,7 @@ export default class UpdateSupplierUseCase implements CommandHandler<UpdateSuppl
             isActive: command.isActive,
         })
 
-        await this.supplierRepository.updateSupplier(command.id, supplier);
+        await this.supplierRepository.update(command.id, supplier);
 
         return {
             id: supplier.entityId.id,

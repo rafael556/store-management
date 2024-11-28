@@ -1,9 +1,12 @@
+import { ISearchableRepository } from "src/core/shared/domain/repository/searchable-repository.interface";
 import { Supplier } from "./supplier.aggregate";
+import { ValueObject } from "src/core/shared/domain/value-object";
+import { SupplierSearchParams, SupplierSearchResult } from "./supplier.search.type";
 
-export interface ISupplierRepository {
-    saveSupplier(supplier: Supplier): Promise<void>;
-    updateSupplier(supplierId: string, supplier: Supplier): Promise<void>;
-    exists(supplierId: string): Promise<boolean>;
-    findSupplier(supplierId: string): Promise<Supplier>;
-    listSuppliers(): Promise<Supplier[]>;
-}
+export interface ISupplierRepository extends ISearchableRepository<
+    Supplier,
+    ValueObject,
+    string,
+    SupplierSearchParams,
+    SupplierSearchResult
+>{}

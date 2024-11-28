@@ -8,7 +8,7 @@ export class ListSuppliersUseCase
   constructor(private readonly repository: ISupplierRepository) {}
 
   async execute(input: any = null): Promise<ListSuppliersResult> {
-    const suppliers = await this.repository.listSuppliers();
+    const suppliers = await this.repository.findAll();
 
     return {
       suppliers,

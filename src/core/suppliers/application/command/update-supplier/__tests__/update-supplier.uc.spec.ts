@@ -10,11 +10,13 @@ describe('Update supplier unit test', () => {
   it('should update supplier', async () => {
     // Arrange
     const supplierRepository = {
-      saveSupplier: jest.fn(),
-      updateSupplier: jest.fn(),
+      insert: jest.fn(),
+      update: jest.fn(),
       exists: jest.fn().mockReturnValue(true),
-      findSupplier: jest.fn(),
-      listSuppliers: jest.fn(),
+      findById: jest.fn(),
+      findAll: jest.fn(),
+      search: jest.fn(),
+      sortableFields: [],
     };
 
     const newSupplier = new Supplier({
@@ -38,7 +40,7 @@ describe('Update supplier unit test', () => {
       await updateSupplierUseCase.execute(supplierInput);
 
     // Assert
-    expect(supplierRepository.updateSupplier).toHaveBeenCalledTimes(1);
+    expect(supplierRepository.update).toHaveBeenCalledTimes(1);
     expect(updatedSupplier).toBeDefined();
     expect(updatedSupplier.name).toBe('New Supplier Name');
     expect(updatedSupplier.telephone).toBe('987654321');
@@ -49,13 +51,15 @@ describe('Update supplier unit test', () => {
   it('should throw error when supplier not found', async () => {
     // Arrange
     const supplierRepository = {
-      saveSupplier: jest.fn(),
-      updateSupplier: jest.fn().mockImplementation(() => {
+      insert: jest.fn(),
+      update: jest.fn().mockImplementation(() => {
         throw new Error('Supplier not found');
       }),
       exists: jest.fn().mockReturnValue(false),
-      findSupplier: jest.fn(),
-      listSuppliers: jest.fn(),
+      findById: jest.fn(),
+      findAll: jest.fn(),
+      search: jest.fn(),
+      sortableFields: [],
     };
 
     const updateSupplierUseCase = new UpdateSupplierUseCase(supplierRepository);

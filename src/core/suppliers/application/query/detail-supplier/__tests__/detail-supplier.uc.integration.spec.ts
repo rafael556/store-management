@@ -44,7 +44,7 @@ describe('Detail supplier use case integration test', () => {
       isActive: true,
     });
 
-    await repository.saveSupplier(supplier);
+    await repository.insert(supplier);
 
     // Act
     const supplierFound = await useCase.execute({supplierId: supplier.entityId.id});

@@ -16,7 +16,7 @@ export class CreateSupplierUseCase implements CommandHandler<CreateSupplierComma
             isActive: true,
         });
         
-        await this.supplierRepository.saveSupplier(supplier);
+        await this.supplierRepository.insert(supplier);
 
         return {
             supplierId: supplier.entityId.id,
