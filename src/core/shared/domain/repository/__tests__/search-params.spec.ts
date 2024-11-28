@@ -1,4 +1,4 @@
-import { SearchParams } from "../search-params";
+import { SearchParams } from '../search-params';
 
 describe('SearchParams', () => {
   it('should set default values when no properties are provided', () => {
@@ -28,7 +28,7 @@ describe('SearchParams', () => {
 
   it('should throw an error if sort is an empty string', () => {
     expect(() => new SearchParams({ sort: '' })).toThrow(
-      'Sort field cannot be an empty string.'
+      'Sort field cannot be an empty string.',
     );
   });
 

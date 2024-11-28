@@ -47,7 +47,9 @@ describe('Detail supplier use case integration test', () => {
     await repository.insert(supplier);
 
     // Act
-    const supplierFound = await useCase.execute({supplierId: supplier.entityId.id});
+    const supplierFound = await useCase.execute({
+      supplierId: supplier.entityId.id,
+    });
 
     // Assert
     expect(supplierFound).toBeDefined();
@@ -57,14 +59,14 @@ describe('Detail supplier use case integration test', () => {
     expect(supplierFound.isActive).toBe(true);
   });
 
-    it('should throw error when supplier not found', async () => {
-        // Arrange
-        const supplierId = new Uuid();
-    
-        // Act
-        const supplierFound = useCase.execute({supplierId: supplierId.id});
-    
-        // Assert
-        await expect(supplierFound).rejects.toThrow('Supplier not found');
-    });
+  it('should throw error when supplier not found', async () => {
+    // Arrange
+    const supplierId = new Uuid();
+
+    // Act
+    const supplierFound = useCase.execute({ supplierId: supplierId.id });
+
+    // Assert
+    await expect(supplierFound).rejects.toThrow('Supplier not found');
+  });
 });

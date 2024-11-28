@@ -53,7 +53,7 @@ describe('Update Supplier integration test', () => {
       supplierSocialMedia: newSupplier.socialMedia,
       supplierIsActive: newSupplier.isActive(),
       supplierCreatedAt: new Date(),
-        supplierUpdatedAt: new Date(),
+      supplierUpdatedAt: new Date(),
     });
 
     // Act
@@ -66,7 +66,8 @@ describe('Update Supplier integration test', () => {
       isActive: false,
     };
 
-    const updatedSupplier: UpdateSupplierResult = await updateSupplierUseCase.execute(updateSupplierCommand);
+    const updatedSupplier: UpdateSupplierResult =
+      await updateSupplierUseCase.execute(updateSupplierCommand);
 
     // Assert
     expect(updatedSupplier).toBeDefined();
@@ -76,22 +77,22 @@ describe('Update Supplier integration test', () => {
     expect(updatedSupplier.isActive).toBe(false);
   });
 
-    it('should throw error when supplier not found', async () => {
-        // Arrange
-        const updateSupplierCommand = {
-        id: new Uuid().id,
-        name: 'New Supplier Name',
-        telephone: '987654321',
-        socialMedia: 'newSocialMedia',
-        isActive: false,
-        };
-    
-        // Act
-        try {
-        await updateSupplierUseCase.execute(updateSupplierCommand);
-        } catch (error) {
-        // Assert
-        expect(error.message).toBe('Supplier not found');
-        }
-    });
+  it('should throw error when supplier not found', async () => {
+    // Arrange
+    const updateSupplierCommand = {
+      id: new Uuid().id,
+      name: 'New Supplier Name',
+      telephone: '987654321',
+      socialMedia: 'newSocialMedia',
+      isActive: false,
+    };
+
+    // Act
+    try {
+      await updateSupplierUseCase.execute(updateSupplierCommand);
+    } catch (error) {
+      // Assert
+      expect(error.message).toBe('Supplier not found');
+    }
+  });
 });

@@ -14,7 +14,9 @@ export class QueryBus {
     const handler = this.handlers.get(query.constructor.name);
 
     if (!handler) {
-      throw new Error(`No handler registered for query ${query.constructor.name}`);
+      throw new Error(
+        `No handler registered for query ${query.constructor.name}`,
+      );
     }
 
     return handler.execute(query);

@@ -63,14 +63,14 @@ describe('List suppliers use case integration test', () => {
     expect(suppliers.suppliers.length).toBe(2);
     expect(suppliers.suppliers[0].name).toBe('Supplier Name 1');
     expect(suppliers.suppliers[1].name).toBe('Supplier Name 2');
-  })
+  });
 
-    it('should return empty list of suppliers', async () => {
-        // Act
-        const suppliers = await useCase.execute();
-    
-        // Assert
-        expect(suppliers).toBeDefined();
-        expect(suppliers.suppliers.length).toBe(0);
-    })
+  it('should return empty list of suppliers', async () => {
+    // Act
+    const suppliers = await useCase.execute();
+
+    // Assert
+    expect(suppliers).toBeDefined();
+    expect(suppliers.suppliers.length).toBe(0);
+  });
 });

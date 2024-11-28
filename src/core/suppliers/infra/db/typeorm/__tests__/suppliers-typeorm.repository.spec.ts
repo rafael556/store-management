@@ -301,7 +301,7 @@ describe('SupplierTypeOrmRepository Integration Test', () => {
     expect(result.items).toHaveLength(1);
     expect(result.items[0].name).toBe('Active Supplier');
   });
-  
+
   it('should return suppliers sorted with default value', async () => {
     // Arrange
     await repository.insert(

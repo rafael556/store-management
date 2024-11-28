@@ -17,8 +17,12 @@ export class SearchParams<Filter = string> {
 
   constructor(props: SearchParamsConstructorProps<Filter>) {
     this._page = props.page && props.page > 0 ? Math.floor(props.page) : 1;
-    this._per_page = props.per_page && props.per_page > 0 ? Math.floor(props.per_page) : 15;
-    this._sort = props.sort !== undefined && props.sort !== null ? props.sort.trim() : null;
+    this._per_page =
+      props.per_page && props.per_page > 0 ? Math.floor(props.per_page) : 15;
+    this._sort =
+      props.sort !== undefined && props.sort !== null
+        ? props.sort.trim()
+        : null;
     this._sort_dir = props.sort_dir || null;
     this._filter = props.filter ?? null;
 

@@ -22,19 +22,19 @@ export class SearchResult<E> {
 
   private validate(): void {
     if (!Array.isArray(this._items)) {
-      throw new Error("Items must be an array.");
+      throw new Error('Items must be an array.');
     }
 
-    if (typeof this._total !== "number" || this._total < 0) {
-      throw new Error("Total must be a non-negative number.");
+    if (typeof this._total !== 'number' || this._total < 0) {
+      throw new Error('Total must be a non-negative number.');
     }
 
-    if (typeof this._current_page !== "number" || this._current_page <= 0) {
-      throw new Error("Current page must be a positive number.");
+    if (typeof this._current_page !== 'number' || this._current_page <= 0) {
+      throw new Error('Current page must be a positive number.');
     }
 
-    if (typeof this._per_page !== "number" || this._per_page <= 0) {
-      throw new Error("Per page must be a positive number.");
+    if (typeof this._per_page !== 'number' || this._per_page <= 0) {
+      throw new Error('Per page must be a positive number.');
     }
   }
 

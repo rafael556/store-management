@@ -1,5 +1,5 @@
-import { QueryHandler } from "../query-handler.interface";
-import { QueryBus } from "../query.bus";
+import { QueryHandler } from '../query-handler.interface';
+import { QueryBus } from '../query.bus';
 
 describe('QueryBus', () => {
   class TestQuery {

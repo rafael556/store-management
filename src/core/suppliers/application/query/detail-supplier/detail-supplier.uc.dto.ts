@@ -1,12 +1,11 @@
-
 export type DetailSupplierQuery = {
-    supplierId: string;
-}
+  supplierId: string;
+};
 
 export type DetailSupplierResponse = {
-    supplierId: string;
-    name: string;
-    telephone: string;
-    socialMedia: string;
-    isActive: boolean;
-}
+  supplierId: string;
+  name: string;
+  telephone: string;
+  socialMedia: string;
+  isActive: boolean;
+};

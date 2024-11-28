@@ -11,7 +11,11 @@ import {
 
 export class SupplierTypeOrmRepository implements ISupplierRepository {
   private readonly repository: Repository<SupplierEntity>;
-  sortableFields: string[] = ['supplierName', 'supplierCreatedAt', 'supplierUpdatedAt'];
+  sortableFields: string[] = [
+    'supplierName',
+    'supplierCreatedAt',
+    'supplierUpdatedAt',
+  ];
 
   constructor(private readonly dataSource: DataSource) {
     this.repository = dataSource.getRepository(SupplierEntity);
