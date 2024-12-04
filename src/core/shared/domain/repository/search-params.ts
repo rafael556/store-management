@@ -9,11 +9,11 @@ export type SearchParamsConstructorProps<Filter = string> = {
 };
 
 export class SearchParams<Filter = string> {
-  private _page: number;
-  private _per_page: number;
-  private _sort: string | null;
-  private _sort_dir: SortDirection | null;
-  private _filter: Filter | null;
+  private readonly _page: number;
+  private readonly _per_page: number;
+  private readonly _sort: string | null;
+  private readonly _sort_dir: SortDirection | null;
+  private readonly _filter: Filter | null;
 
   constructor(props: SearchParamsConstructorProps<Filter>) {
     this._page = props.page && props.page > 0 ? Math.floor(props.page) : 1;
