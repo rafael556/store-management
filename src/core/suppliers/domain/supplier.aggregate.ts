@@ -16,7 +16,7 @@ export class Supplier {
   private _isActive: boolean = true;
 
   constructor(props: SupplierProps) {
-    this._supplierId = new Uuid();
+    this._supplierId = props.supplierId;
     this._name = props.name;
     this._telephone = props.telephone;
     this._socialMedia = props.socialMedia;

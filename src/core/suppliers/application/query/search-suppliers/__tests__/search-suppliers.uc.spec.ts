@@ -61,8 +61,6 @@ describe('search suppliers use case unit test', () => {
 
     const supplier1FromList = suppliers.items[0];
 
-    console.log(suppliers);
-
     expect(suppliers.total).toBe(2);
     expect(suppliers.currentPage).toBe(1);
     expect(suppliers.perPage).toBe(10);
