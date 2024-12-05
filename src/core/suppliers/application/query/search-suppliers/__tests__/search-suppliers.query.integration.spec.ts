@@ -6,15 +6,15 @@ import { SupplierTypeOrmRepository } from 'src/core/suppliers/infra/db/typeorm/s
 import { SupplierEntity } from 'src/core/suppliers/infra/db/typeorm/suppliers.entity';
 import { DataSource } from 'typeorm';
 import {
-  SearchSuppliersPageQuery,
-  SearchSuppliersPageResult,
-} from '../search-suppliers.uc.dto';
-import { SearchSuppliersUseCase } from '../search-suppliers.uc';
+  SearchSuppliersQuery,
+  SearchSuppliersResult,
+} from '../search-suppliers.query.dto';
+import { SearchSuppliersQueryHandler } from '../search-suppliers.query';
 
 describe('search suppliers use case integration tests', () => {
   let repository: SupplierTypeOrmRepository;
   let dataSource: DataSource;
-  let useCase: SearchSuppliersUseCase;
+  let useCase: SearchSuppliersQueryHandler;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -31,7 +31,7 @@ describe('search suppliers use case integration tests', () => {
 
     dataSource = moduleRef.get<DataSource>(DataSource);
     repository = new SupplierTypeOrmRepository(dataSource);
-    useCase = new SearchSuppliersUseCase(repository);
+    useCase = new SearchSuppliersQueryHandler(repository);
   });
 
   afterEach(async () => {
@@ -60,7 +60,7 @@ describe('search suppliers use case integration tests', () => {
     await repository.insert(supplier2);
 
     // Act
-    const supplierSearchInput: SearchSuppliersPageQuery = {
+    const supplierSearchInput: SearchSuppliersQuery = {
       page: 1,
       pageSize: 10,
       filter: {
@@ -69,7 +69,7 @@ describe('search suppliers use case integration tests', () => {
       sort: 'supplierName',
     };
 
-    const suppliers: SearchSuppliersPageResult =
+    const suppliers: SearchSuppliersResult =
       await useCase.execute(supplierSearchInput);
 
     // Assert
@@ -103,7 +103,7 @@ describe('search suppliers use case integration tests', () => {
     await repository.insert(supplier2);
 
     // Act
-    const supplierSearchInput: SearchSuppliersPageQuery = {
+    const supplierSearchInput: SearchSuppliersQuery = {
       page: 1,
       pageSize: 10,
       filter: {
@@ -113,7 +113,7 @@ describe('search suppliers use case integration tests', () => {
       sortDir: 'desc',
     };
 
-    const suppliers: SearchSuppliersPageResult =
+    const suppliers: SearchSuppliersResult =
       await useCase.execute(supplierSearchInput);
 
     // Assert
@@ -128,7 +128,7 @@ describe('search suppliers use case integration tests', () => {
   it('should return an empty list when no suppliers are found', async () => {
     // Arrange
     // Act
-    const supplierSearchInput: SearchSuppliersPageQuery = {
+    const supplierSearchInput: SearchSuppliersQuery = {
       page: 1,
       pageSize: 10,
       filter: {
@@ -136,7 +136,7 @@ describe('search suppliers use case integration tests', () => {
       },
     };
 
-    const suppliers: SearchSuppliersPageResult =
+    const suppliers: SearchSuppliersResult =
       await useCase.execute(supplierSearchInput);
 
     // Assert

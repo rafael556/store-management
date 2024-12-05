@@ -1,7 +1,7 @@
 import { SortDirection } from 'src/core/shared/domain/repository/search-params';
 import { Supplier } from 'src/core/suppliers/domain/supplier.aggregate';
 
-export interface SearchSuppliersPageQuery {
+export interface SearchSuppliersQuery {
   page?: number;
   pageSize?: number;
   filter?: {
@@ -12,7 +12,7 @@ export interface SearchSuppliersPageQuery {
   sortDir?: SortDirection | null;
 }
 
-export interface SearchSuppliersPageResult {
+export interface SearchSuppliersResult {
   total: number;
   currentPage: number;
   perPage: number;

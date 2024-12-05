@@ -10,7 +10,7 @@ import UpdateSupplierCommandHandler from 'src/core/suppliers/application/command
 import { UpdateSupplierResult } from 'src/core/suppliers/application/command/update-supplier/update-supplier.command.dto';
 import DetailSupplierQueryHandler from 'src/core/suppliers/application/query/detail-supplier/detail-supplier.query';
 import { ListSuppliersQueryHandler } from 'src/core/suppliers/application/query/list-suppliers/list-suppliers.query';
-import { SearchSuppliersUseCase } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.uc';
+import { SearchSuppliersQueryHandler } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.query';
 
 describe('SupplierFacade Integration Test', () => {
   let facade: SupplierFacade;
@@ -55,8 +55,8 @@ describe('SupplierFacade Integration Test', () => {
           inject: ['SupplierRepository'],
         },
         {
-          provide: SearchSuppliersUseCase,
-          useFactory: (repo) => new SearchSuppliersUseCase(repo),
+          provide: SearchSuppliersQueryHandler,
+          useFactory: (repo) => new SearchSuppliersQueryHandler(repo),
           inject: ['SupplierRepository'],
         },
         SupplierFacade,

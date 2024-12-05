@@ -2,10 +2,10 @@ import { Uuid } from 'src/core/shared/domain/value-objects/uuid.vo';
 import { Supplier } from 'src/core/suppliers/domain/supplier.aggregate';
 import { ISupplierRepository } from 'src/core/suppliers/domain/supplier.repository.interface';
 import {
-  SearchSuppliersPageQuery,
-  SearchSuppliersPageResult,
-} from '../search-suppliers.uc.dto';
-import { SearchSuppliersUseCase } from '../search-suppliers.uc';
+  SearchSuppliersQuery,
+  SearchSuppliersResult,
+} from '../search-suppliers.query.dto';
+import { SearchSuppliersQueryHandler } from '../search-suppliers.query';
 
 describe('search suppliers use case unit test', () => {
   it('should return list of filtered suppliers', async () => {
@@ -41,10 +41,10 @@ describe('search suppliers use case unit test', () => {
       sortableFields: ['supplierName'],
     };
 
-    const usecase = new SearchSuppliersUseCase(repository);
+    const usecase = new SearchSuppliersQueryHandler(repository);
 
     // Act
-    const supplierSearchInput: SearchSuppliersPageQuery = {
+    const supplierSearchInput: SearchSuppliersQuery = {
       page: 1,
       pageSize: 10,
       filter: {
@@ -52,7 +52,7 @@ describe('search suppliers use case unit test', () => {
       },
     };
 
-    const suppliers: SearchSuppliersPageResult =
+    const suppliers: SearchSuppliersResult =
       await usecase.execute(supplierSearchInput);
 
     // Assert
@@ -103,10 +103,10 @@ describe('search suppliers use case unit test', () => {
       sortableFields: ['supplierName'],
     };
 
-    const usecase = new SearchSuppliersUseCase(repository);
+    const usecase = new SearchSuppliersQueryHandler(repository);
 
     // Act
-    const supplierSearchInput: SearchSuppliersPageQuery = {
+    const supplierSearchInput: SearchSuppliersQuery = {
       page: 1,
       pageSize: 10,
       filter: {
@@ -116,7 +116,7 @@ describe('search suppliers use case unit test', () => {
       sortDir: 'desc',
     };
 
-    const suppliers: SearchSuppliersPageResult =
+    const suppliers: SearchSuppliersResult =
       await usecase.execute(supplierSearchInput);
 
     // Assert
@@ -151,10 +151,10 @@ describe('search suppliers use case unit test', () => {
       sortableFields: ['supplierName'],
     };
 
-    const usecase = new SearchSuppliersUseCase(repository);
+    const usecase = new SearchSuppliersQueryHandler(repository);
 
     // Act
-    const supplierSearchInput: SearchSuppliersPageQuery = {
+    const supplierSearchInput: SearchSuppliersQuery = {
       page: 1,
       pageSize: 10,
       filter: {
@@ -162,7 +162,7 @@ describe('search suppliers use case unit test', () => {
       },
     };
 
-    const suppliers: SearchSuppliersPageResult =
+    const suppliers: SearchSuppliersResult =
       await usecase.execute(supplierSearchInput);
 
     // Assert

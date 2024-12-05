@@ -5,8 +5,8 @@ import UpdateSupplierCommandHandler from 'src/core/suppliers/application/command
 import { UpdateSupplierCommand } from 'src/core/suppliers/application/command/update-supplier/update-supplier.command.dto';
 import DetailSupplierQueryHandler from 'src/core/suppliers/application/query/detail-supplier/detail-supplier.query';
 import { ListSuppliersQueryHandler } from 'src/core/suppliers/application/query/list-suppliers/list-suppliers.query';
-import { SearchSuppliersUseCase } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.uc';
-import { SearchSuppliersPageQuery } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.uc.dto';
+import { SearchSuppliersQueryHandler } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.query';
+import { SearchSuppliersQuery } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.query.dto';
 
 @Injectable()
 export class SupplierFacade {
@@ -15,7 +15,7 @@ export class SupplierFacade {
     private readonly updateSupplierUseCase: UpdateSupplierCommandHandler,
     private readonly detailSupplierUseCase: DetailSupplierQueryHandler,
     private readonly listSuppliersUseCase: ListSuppliersQueryHandler,
-    private readonly searchSuppliersUseCase: SearchSuppliersUseCase
+    private readonly searchSuppliersUseCase: SearchSuppliersQueryHandler
   ) {}
 
   async createSupplier(supplier: CreateSupplierCommand) {
@@ -34,7 +34,7 @@ export class SupplierFacade {
     return this.listSuppliersUseCase.execute();
   }
 
-  async searchSuppliers(input: SearchSuppliersPageQuery) {
+  async searchSuppliers(input: SearchSuppliersQuery) {
     return this.searchSuppliersUseCase.execute(input);
   }
 }

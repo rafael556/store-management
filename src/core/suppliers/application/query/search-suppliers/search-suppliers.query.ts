@@ -1,22 +1,22 @@
 import { QueryHandler } from 'src/core/shared/application/query-handler.interface';
 import { ISupplierRepository } from 'src/core/suppliers/domain/supplier.repository.interface';
 import {
-  SearchSuppliersPageQuery,
-  SearchSuppliersPageResult,
-} from './search-suppliers.uc.dto';
+  SearchSuppliersQuery,
+  SearchSuppliersResult,
+} from './search-suppliers.query.dto';
 import {
   SupplierSearchParams,
   SupplierSearchResult,
 } from 'src/core/suppliers/domain/supplier.search.type';
 
-export class SearchSuppliersUseCase
-  implements QueryHandler<SearchSuppliersPageQuery, SearchSuppliersPageResult>
+export class SearchSuppliersQueryHandler
+  implements QueryHandler<SearchSuppliersQuery, SearchSuppliersResult>
 {
   constructor(private readonly supplierRepository: ISupplierRepository) {}
 
   async execute(
-    query: SearchSuppliersPageQuery,
-  ): Promise<SearchSuppliersPageResult> {
+    query: SearchSuppliersQuery,
+  ): Promise<SearchSuppliersResult> {
     const input = new SupplierSearchParams({
       filter: query.filter,
       page: query.page,
