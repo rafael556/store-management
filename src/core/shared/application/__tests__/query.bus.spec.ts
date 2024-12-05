@@ -35,7 +35,7 @@ describe('QueryBus', () => {
     const query = new TestQuery(42);
 
     // Act
-    const result = await queryBus.execute(query);
+    const result = await queryBus.execute('TestQuery', query);
 
     // Assert
     expect(result).toBe('Result for ID: 42');
@@ -45,7 +45,7 @@ describe('QueryBus', () => {
   it('should throw an error if no handler is registered for a query', async () => {
     const query = new TestQuery(42);
 
-    await expect(queryBus.execute(query)).rejects.toThrow(
+    await expect(queryBus.execute('TestQuery', query)).rejects.toThrow(
       `No handler registered for query TestQuery`,
     );
   });

@@ -10,12 +10,15 @@ export class QueryBus {
     this.handlers.set(queryName, handler);
   }
 
-  async execute<TQuery, TResult>(query: TQuery): Promise<TResult> {
-    const handler = this.handlers.get(query.constructor.name);
+  async execute<TQuery, TResult>(
+    identifier: string,
+    query: TQuery
+  ): Promise<TResult> {
+    const handler = this.handlers.get(identifier);
 
     if (!handler) {
       throw new Error(
-        `No handler registered for query ${query.constructor.name}`,
+        `No handler registered for query ${identifier}`,
       );
     }
 

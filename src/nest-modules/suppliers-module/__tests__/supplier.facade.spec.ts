@@ -11,6 +11,8 @@ import { UpdateSupplierResult } from 'src/core/suppliers/application/command/upd
 import DetailSupplierQueryHandler from 'src/core/suppliers/application/query/detail-supplier/detail-supplier.query';
 import { ListSuppliersQueryHandler } from 'src/core/suppliers/application/query/list-suppliers/list-suppliers.query';
 import { SearchSuppliersQueryHandler } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.query';
+import { CommandBus } from 'src/core/shared/application/command.bus';
+import { QueryBus } from 'src/core/shared/application/query.bus';
 
 describe('SupplierFacade Integration Test', () => {
   let facade: SupplierFacade;
@@ -58,6 +60,14 @@ describe('SupplierFacade Integration Test', () => {
           provide: SearchSuppliersQueryHandler,
           useFactory: (repo) => new SearchSuppliersQueryHandler(repo),
           inject: ['SupplierRepository'],
+        },
+        {
+          provide: CommandBus,
+          useClass: CommandBus,
+        },
+        {
+          provide: QueryBus,
+          useClass: QueryBus,
         },
         SupplierFacade,
       ],

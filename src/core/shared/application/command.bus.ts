@@ -10,13 +10,14 @@ export class CommandBus {
     this.handlers.set(commandName, handler);
   }
 
-  async execute<TCommand, TResult>(command: TCommand): Promise<TResult> {
-    const handler = this.handlers.get(command.constructor.name);
+  async execute<TCommand, TResult>(
+    identifier: string,
+    command: TCommand,
+  ): Promise<TResult> {
+    const handler = this.handlers.get(identifier);
 
     if (!handler) {
-      throw new Error(
-        `No handler registered for command ${command.constructor.name}`,
-      );
+      throw new Error(`No handler registered for identifier ${identifier}`);
     }
 
     return handler.execute(command);

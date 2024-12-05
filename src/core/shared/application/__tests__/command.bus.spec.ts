@@ -35,7 +35,7 @@ describe('CommandBus', () => {
     const command = new TestCommand('Test Payload');
 
     // Act
-    const result = await commandBus.execute(command);
+    const result = await commandBus.execute('TestCommand', command);
 
     // Assert
     expect(result).toBe('Handled: Test Payload');
@@ -45,8 +45,8 @@ describe('CommandBus', () => {
   it('should throw an error if no handler is registered for a command', async () => {
     const command = new TestCommand('Test Payload');
 
-    await expect(commandBus.execute(command)).rejects.toThrow(
-      `No handler registered for command TestCommand`,
+    await expect(commandBus.execute('TestCommand', command)).rejects.toThrow(
+      `No handler registered for identifier TestCommand`,
     );
   });
 
