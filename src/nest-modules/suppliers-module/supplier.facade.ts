@@ -4,7 +4,7 @@ import { CreateSupplierCommand } from 'src/core/suppliers/application/command/cr
 import UpdateSupplierCommandHandler from 'src/core/suppliers/application/command/update-supplier/update-supplier.command';
 import { UpdateSupplierCommand } from 'src/core/suppliers/application/command/update-supplier/update-supplier.command.dto';
 import DetailSupplierQueryHandler from 'src/core/suppliers/application/query/detail-supplier/detail-supplier.query';
-import { ListSuppliersUseCase } from 'src/core/suppliers/application/query/list-suppliers/list-suppliers.uc';
+import { ListSuppliersQueryHandler } from 'src/core/suppliers/application/query/list-suppliers/list-suppliers.query';
 import { SearchSuppliersUseCase } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.uc';
 import { SearchSuppliersPageQuery } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.uc.dto';
 
@@ -14,7 +14,7 @@ export class SupplierFacade {
     private readonly createSupplierUseCase: CreateSupplierCommandHandler,
     private readonly updateSupplierUseCase: UpdateSupplierCommandHandler,
     private readonly detailSupplierUseCase: DetailSupplierQueryHandler,
-    private readonly listSuppliersUseCase: ListSuppliersUseCase,
+    private readonly listSuppliersUseCase: ListSuppliersQueryHandler,
     private readonly searchSuppliersUseCase: SearchSuppliersUseCase
   ) {}
 

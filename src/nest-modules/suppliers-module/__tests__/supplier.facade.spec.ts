@@ -9,7 +9,7 @@ import { SupplierTypeOrmRepository } from 'src/core/suppliers/infra/db/typeorm/s
 import UpdateSupplierCommandHandler from 'src/core/suppliers/application/command/update-supplier/update-supplier.command';
 import { UpdateSupplierResult } from 'src/core/suppliers/application/command/update-supplier/update-supplier.command.dto';
 import DetailSupplierQueryHandler from 'src/core/suppliers/application/query/detail-supplier/detail-supplier.query';
-import { ListSuppliersUseCase } from 'src/core/suppliers/application/query/list-suppliers/list-suppliers.uc';
+import { ListSuppliersQueryHandler } from 'src/core/suppliers/application/query/list-suppliers/list-suppliers.query';
 import { SearchSuppliersUseCase } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.uc';
 
 describe('SupplierFacade Integration Test', () => {
@@ -50,8 +50,8 @@ describe('SupplierFacade Integration Test', () => {
           inject: ['SupplierRepository'],
         },
         {
-          provide: ListSuppliersUseCase,
-          useFactory: (repo) => new ListSuppliersUseCase(repo),
+          provide: ListSuppliersQueryHandler,
+          useFactory: (repo) => new ListSuppliersQueryHandler(repo),
           inject: ['SupplierRepository'],
         },
         {

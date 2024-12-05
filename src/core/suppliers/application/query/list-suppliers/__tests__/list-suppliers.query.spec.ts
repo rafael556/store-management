@@ -1,7 +1,7 @@
 import { Uuid } from 'src/core/shared/domain/value-objects/uuid.vo';
 import { Supplier } from 'src/core/suppliers/domain/supplier.aggregate';
 import { ISupplierRepository } from 'src/core/suppliers/domain/supplier.repository.interface';
-import { ListSuppliersUseCase } from '../list-suppliers.uc';
+import { ListSuppliersQueryHandler } from '../list-suppliers.query';
 
 describe('List suppliers use case unit test', () => {
   it('should return list of suppliers', async () => {
@@ -33,7 +33,7 @@ describe('List suppliers use case unit test', () => {
       sortableFields: [],
     };
 
-    const usecase = new ListSuppliersUseCase(repository);
+    const usecase = new ListSuppliersQueryHandler(repository);
 
     // Act
     const suppliers = await usecase.execute();
@@ -69,7 +69,7 @@ describe('List suppliers use case unit test', () => {
       sortableFields: [],
     };
 
-    const usecase = new ListSuppliersUseCase(repository);
+    const usecase = new ListSuppliersQueryHandler(repository);
 
     // Act
     const suppliers = await usecase.execute();
