@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSupplierUseCase } from 'src/core/suppliers/application/command/create-supplier/create-supplier.uc';
-import { CreateSupplierCommand } from 'src/core/suppliers/application/command/create-supplier/create-supplier.uc.dto';
+import { CreateSupplierCommandHandler } from 'src/core/suppliers/application/command/create-supplier/create-supplier.command';
+import { CreateSupplierCommand } from 'src/core/suppliers/application/command/create-supplier/create-supplier.command.dto';
 import UpdateSupplierUseCase from 'src/core/suppliers/application/command/update-supplier/update-supplier.uc';
 import { UpdateSupplierCommand } from 'src/core/suppliers/application/command/update-supplier/update-supplier.uc.dto';
 import DetailSupplierUseCase from 'src/core/suppliers/application/query/detail-supplier/detail-supplier.uc';
@@ -11,7 +11,7 @@ import { SearchSuppliersPageQuery } from 'src/core/suppliers/application/query/s
 @Injectable()
 export class SupplierFacade {
   constructor(
-    private readonly createSupplierUseCase: CreateSupplierUseCase,
+    private readonly createSupplierUseCase: CreateSupplierCommandHandler,
     private readonly updateSupplierUseCase: UpdateSupplierUseCase,
     private readonly detailSupplierUseCase: DetailSupplierUseCase,
     private readonly listSuppliersUseCase: ListSuppliersUseCase,

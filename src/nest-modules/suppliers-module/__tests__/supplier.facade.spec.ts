@@ -3,8 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SupplierFacade } from '../supplier.facade';
 import { DataSource } from 'typeorm';
 import { SupplierEntity } from 'src/core/suppliers/infra/db/typeorm/suppliers.entity';
-import { CreateSupplierUseCase } from 'src/core/suppliers/application/command/create-supplier/create-supplier.uc';
-import { CreateSupplierCommand, CreateSupplierResult } from 'src/core/suppliers/application/command/create-supplier/create-supplier.uc.dto';
+import { CreateSupplierCommandHandler } from 'src/core/suppliers/application/command/create-supplier/create-supplier.command';
+import { CreateSupplierCommand, CreateSupplierResult } from 'src/core/suppliers/application/command/create-supplier/create-supplier.command.dto';
 import { SupplierTypeOrmRepository } from 'src/core/suppliers/infra/db/typeorm/suppliers-typeorm.repository';
 import UpdateSupplierUseCase from 'src/core/suppliers/application/command/update-supplier/update-supplier.uc';
 import { UpdateSupplierResult } from 'src/core/suppliers/application/command/update-supplier/update-supplier.uc.dto';
@@ -35,8 +35,8 @@ describe('SupplierFacade Integration Test', () => {
           inject: [DataSource],
         },
         {
-          provide: CreateSupplierUseCase,
-          useFactory: (repo) => new CreateSupplierUseCase(repo),
+          provide: CreateSupplierCommandHandler,
+          useFactory: (repo) => new CreateSupplierCommandHandler(repo),
           inject: ['SupplierRepository'],
         },
         {

@@ -2,12 +2,12 @@ import { Supplier } from 'src/core/suppliers/domain/supplier.aggregate';
 import {
   CreateSupplierCommand,
   CreateSupplierResult,
-} from './create-supplier.uc.dto';
+} from './create-supplier.command.dto';
 import { Uuid } from 'src/core/shared/domain/value-objects/uuid.vo';
 import { ISupplierRepository } from 'src/core/suppliers/domain/supplier.repository.interface';
 import { CommandHandler } from 'src/core/shared/application/command-handler.interface';
 
-export class CreateSupplierUseCase
+export class CreateSupplierCommandHandler
   implements CommandHandler<CreateSupplierCommand, CreateSupplierResult>
 {
   constructor(private readonly supplierRepository: ISupplierRepository) {}

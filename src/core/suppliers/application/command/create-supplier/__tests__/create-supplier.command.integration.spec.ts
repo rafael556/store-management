@@ -3,17 +3,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SupplierTypeOrmRepository } from 'src/core/suppliers/infra/db/typeorm/suppliers-typeorm.repository';
 import { SupplierEntity } from 'src/core/suppliers/infra/db/typeorm/suppliers.entity';
 import { DataSource } from 'typeorm';
-import { CreateSupplierUseCase } from '../create-supplier.uc';
+import { CreateSupplierCommandHandler } from '../create-supplier.command';
 import {
   CreateSupplierCommand,
   CreateSupplierResult,
-} from '../create-supplier.uc.dto';
+} from '../create-supplier.command.dto';
 import { ISupplierRepository } from 'src/core/suppliers/domain/supplier.repository.interface';
 
 describe('CreateSupplier Integration Test', () => {
   let repository: ISupplierRepository;
   let dataSource: DataSource;
-  let createSupplierUseCase: CreateSupplierUseCase;
+  let createSupplierUseCase: CreateSupplierCommandHandler;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -30,7 +30,7 @@ describe('CreateSupplier Integration Test', () => {
 
     dataSource = moduleRef.get<DataSource>(DataSource);
     repository = new SupplierTypeOrmRepository(dataSource);
-    createSupplierUseCase = new CreateSupplierUseCase(repository);
+    createSupplierUseCase = new CreateSupplierCommandHandler(repository);
   });
 
   afterEach(async () => {

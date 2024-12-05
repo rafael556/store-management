@@ -1,6 +1,6 @@
 import { ISupplierRepository } from 'src/core/suppliers/domain/supplier.repository.interface';
-import { CreateSupplierUseCase } from '../create-supplier.uc';
-import { CreateSupplierCommand } from '../create-supplier.uc.dto';
+import { CreateSupplierCommandHandler } from '../create-supplier.command';
+import { CreateSupplierCommand } from '../create-supplier.command.dto';
 
 describe('Create supplier unit test', () => {
   it('should create a supplier', async () => {
@@ -14,7 +14,7 @@ describe('Create supplier unit test', () => {
       search: jest.fn(),
       sortableFields: [],
     };
-    const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository);
+    const createSupplierUseCase = new CreateSupplierCommandHandler(supplierRepository);
     const supplier: CreateSupplierCommand = {
       name: 'Supplier Name',
       telephone: '123456789',
@@ -44,7 +44,7 @@ describe('Create supplier unit test', () => {
       search: jest.fn(),
       sortableFields: [],
     };
-    const createSupplierUseCase = new CreateSupplierUseCase(supplierRepository);
+    const createSupplierUseCase = new CreateSupplierCommandHandler(supplierRepository);
     const supplier: CreateSupplierCommand = {
       name: 'Supplier Name',
       telephone: '123456789',
