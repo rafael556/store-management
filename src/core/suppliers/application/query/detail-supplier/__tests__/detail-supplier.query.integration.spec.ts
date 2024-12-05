@@ -5,12 +5,12 @@ import { Supplier } from 'src/core/suppliers/domain/supplier.aggregate';
 import { SupplierTypeOrmRepository } from 'src/core/suppliers/infra/db/typeorm/suppliers-typeorm.repository';
 import { SupplierEntity } from 'src/core/suppliers/infra/db/typeorm/suppliers.entity';
 import { DataSource } from 'typeorm';
-import DetailSupplierUseCase from '../detail-supplier.uc';
+import DetailSupplierQueryHandler from '../detail-supplier.query';
 
 describe('Detail supplier use case integration test', () => {
   let repository: SupplierTypeOrmRepository;
   let dataSource: DataSource;
-  let useCase: DetailSupplierUseCase;
+  let useCase: DetailSupplierQueryHandler;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -27,7 +27,7 @@ describe('Detail supplier use case integration test', () => {
 
     dataSource = moduleRef.get<DataSource>(DataSource);
     repository = new SupplierTypeOrmRepository(dataSource);
-    useCase = new DetailSupplierUseCase(repository);
+    useCase = new DetailSupplierQueryHandler(repository);
   });
 
   afterEach(async () => {

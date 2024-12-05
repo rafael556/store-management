@@ -3,7 +3,7 @@ import { CreateSupplierCommandHandler } from 'src/core/suppliers/application/com
 import { CreateSupplierCommand } from 'src/core/suppliers/application/command/create-supplier/create-supplier.command.dto';
 import UpdateSupplierCommandHandler from 'src/core/suppliers/application/command/update-supplier/update-supplier.command';
 import { UpdateSupplierCommand } from 'src/core/suppliers/application/command/update-supplier/update-supplier.command.dto';
-import DetailSupplierUseCase from 'src/core/suppliers/application/query/detail-supplier/detail-supplier.uc';
+import DetailSupplierQueryHandler from 'src/core/suppliers/application/query/detail-supplier/detail-supplier.query';
 import { ListSuppliersUseCase } from 'src/core/suppliers/application/query/list-suppliers/list-suppliers.uc';
 import { SearchSuppliersUseCase } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.uc';
 import { SearchSuppliersPageQuery } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.uc.dto';
@@ -13,7 +13,7 @@ export class SupplierFacade {
   constructor(
     private readonly createSupplierUseCase: CreateSupplierCommandHandler,
     private readonly updateSupplierUseCase: UpdateSupplierCommandHandler,
-    private readonly detailSupplierUseCase: DetailSupplierUseCase,
+    private readonly detailSupplierUseCase: DetailSupplierQueryHandler,
     private readonly listSuppliersUseCase: ListSuppliersUseCase,
     private readonly searchSuppliersUseCase: SearchSuppliersUseCase
   ) {}

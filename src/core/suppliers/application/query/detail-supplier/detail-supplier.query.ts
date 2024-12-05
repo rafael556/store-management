@@ -2,11 +2,11 @@ import { QueryHandler } from 'src/core/shared/application/query-handler.interfac
 import {
   DetailSupplierQuery,
   DetailSupplierResponse,
-} from './detail-supplier.uc.dto';
+} from './detail-supplier.query.dto';
 import { ISupplierRepository } from 'src/core/suppliers/domain/supplier.repository.interface';
 import { Logger } from '@nestjs/common';
 
-export default class DetailSupplierUseCase
+export default class DetailSupplierQueryHandler
   implements QueryHandler<DetailSupplierQuery, DetailSupplierResponse>
 {
   constructor(private readonly supplierRepository: ISupplierRepository) {}

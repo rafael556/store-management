@@ -8,7 +8,7 @@ import { CreateSupplierCommand, CreateSupplierResult } from 'src/core/suppliers/
 import { SupplierTypeOrmRepository } from 'src/core/suppliers/infra/db/typeorm/suppliers-typeorm.repository';
 import UpdateSupplierCommandHandler from 'src/core/suppliers/application/command/update-supplier/update-supplier.command';
 import { UpdateSupplierResult } from 'src/core/suppliers/application/command/update-supplier/update-supplier.command.dto';
-import DetailSupplierUseCase from 'src/core/suppliers/application/query/detail-supplier/detail-supplier.uc';
+import DetailSupplierQueryHandler from 'src/core/suppliers/application/query/detail-supplier/detail-supplier.query';
 import { ListSuppliersUseCase } from 'src/core/suppliers/application/query/list-suppliers/list-suppliers.uc';
 import { SearchSuppliersUseCase } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.uc';
 
@@ -45,8 +45,8 @@ describe('SupplierFacade Integration Test', () => {
           inject: ['SupplierRepository'],
         },
         {
-          provide: DetailSupplierUseCase,
-          useFactory: (repo) => new DetailSupplierUseCase(repo),
+          provide: DetailSupplierQueryHandler,
+          useFactory: (repo) => new DetailSupplierQueryHandler(repo),
           inject: ['SupplierRepository'],
         },
         {

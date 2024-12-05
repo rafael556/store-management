@@ -1,7 +1,7 @@
 import { Uuid } from 'src/core/shared/domain/value-objects/uuid.vo';
 import { Supplier } from 'src/core/suppliers/domain/supplier.aggregate';
 import { ISupplierRepository } from 'src/core/suppliers/domain/supplier.repository.interface';
-import DetailSupplierUseCase from '../detail-supplier.uc';
+import DetailSupplierQueryHandler from '../detail-supplier.query';
 
 describe('detail supplier use case unit test', () => {
   it('should return supplier by id', async () => {
@@ -25,7 +25,7 @@ describe('detail supplier use case unit test', () => {
       sortableFields: [],
     };
 
-    const usecase = new DetailSupplierUseCase(repository);
+    const usecase = new DetailSupplierQueryHandler(repository);
 
     // Act
     await repository.insert(supplier);
@@ -55,7 +55,7 @@ describe('detail supplier use case unit test', () => {
       sortableFields: [],
     };
 
-    const usecase = new DetailSupplierUseCase(repository);
+    const usecase = new DetailSupplierQueryHandler(repository);
 
     // Act
     try {
