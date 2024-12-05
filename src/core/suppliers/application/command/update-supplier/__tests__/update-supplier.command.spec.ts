@@ -2,9 +2,9 @@ import { Uuid } from 'src/core/shared/domain/value-objects/uuid.vo';
 import {
   UpdateSupplierCommand,
   UpdateSupplierResult,
-} from '../update-supplier.uc.dto';
+} from '../update-supplier.command.dto';
 import { Supplier } from 'src/core/suppliers/domain/supplier.aggregate';
-import UpdateSupplierUseCase from '../update-supplier.uc';
+import UpdateSupplierCommandHandler from '../update-supplier.command';
 
 describe('Update supplier unit test', () => {
   it('should update supplier', async () => {
@@ -27,7 +27,7 @@ describe('Update supplier unit test', () => {
       isActive: true,
     });
 
-    const updateSupplierUseCase = new UpdateSupplierUseCase(supplierRepository);
+    const updateSupplierUseCase = new UpdateSupplierCommandHandler(supplierRepository);
     const supplierInput: UpdateSupplierCommand = {
       id: newSupplier.entityId.id,
       name: 'New Supplier Name',
@@ -62,7 +62,7 @@ describe('Update supplier unit test', () => {
       sortableFields: [],
     };
 
-    const updateSupplierUseCase = new UpdateSupplierUseCase(supplierRepository);
+    const updateSupplierUseCase = new UpdateSupplierCommandHandler(supplierRepository);
     const supplierInput: UpdateSupplierCommand = {
       id: new Uuid().id,
       name: 'New Supplier Name',

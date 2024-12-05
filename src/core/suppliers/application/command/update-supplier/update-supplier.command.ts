@@ -2,12 +2,12 @@ import { CommandHandler } from 'src/core/shared/application/command-handler.inte
 import {
   UpdateSupplierCommand,
   UpdateSupplierResult,
-} from './update-supplier.uc.dto';
+} from './update-supplier.command.dto';
 import { ISupplierRepository } from 'src/core/suppliers/domain/supplier.repository.interface';
 import { Supplier } from 'src/core/suppliers/domain/supplier.aggregate';
 import { Uuid } from 'src/core/shared/domain/value-objects/uuid.vo';
 
-export default class UpdateSupplierUseCase
+export default class UpdateSupplierCommandHandler
   implements CommandHandler<UpdateSupplierCommand, UpdateSupplierResult>
 {
   constructor(private readonly supplierRepository: ISupplierRepository) {}

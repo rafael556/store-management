@@ -6,13 +6,13 @@ import { ISupplierRepository } from 'src/core/suppliers/domain/supplier.reposito
 import { SupplierTypeOrmRepository } from 'src/core/suppliers/infra/db/typeorm/suppliers-typeorm.repository';
 import { SupplierEntity } from 'src/core/suppliers/infra/db/typeorm/suppliers.entity';
 import { DataSource } from 'typeorm';
-import { UpdateSupplierResult } from '../update-supplier.uc.dto';
-import UpdateSupplierUseCase from '../update-supplier.uc';
+import { UpdateSupplierResult } from '../update-supplier.command.dto';
+import UpdateSupplierCommandHandler from '../update-supplier.command';
 
 describe('Update Supplier integration test', () => {
   let repository: ISupplierRepository;
   let dataSource: DataSource;
-  let updateSupplierUseCase: UpdateSupplierUseCase;
+  let updateSupplierUseCase: UpdateSupplierCommandHandler;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -29,7 +29,7 @@ describe('Update Supplier integration test', () => {
 
     dataSource = moduleRef.get<DataSource>(DataSource);
     repository = new SupplierTypeOrmRepository(dataSource);
-    updateSupplierUseCase = new UpdateSupplierUseCase(repository);
+    updateSupplierUseCase = new UpdateSupplierCommandHandler(repository);
   });
 
   afterEach(async () => {
