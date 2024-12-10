@@ -28,7 +28,8 @@ const config: Config = {
     '.module.ts',
     'main.ts',
     '.dto.ts',
-    '.type.ts'
+    '.type.ts',
+    '.providers.ts',
   ],
   coverageThreshold: {
     global: {

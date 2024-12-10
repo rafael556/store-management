@@ -27,7 +27,9 @@ describe('Update supplier unit test', () => {
       isActive: true,
     });
 
-    const updateSupplierUseCase = new UpdateSupplierCommandHandler(supplierRepository);
+    const updateSupplierUseCase = new UpdateSupplierCommandHandler(
+      supplierRepository,
+    );
     const supplierInput: UpdateSupplierCommand = {
       id: newSupplier.entityId.id,
       name: 'New Supplier Name',
@@ -46,6 +48,7 @@ describe('Update supplier unit test', () => {
     expect(updatedSupplier.telephone).toBe('987654321');
     expect(updatedSupplier.socialMedia).toBe('newSocialMedia');
     expect(updatedSupplier.isActive).toBe(false);
+    expect(updateSupplierUseCase.getUncommittedEvents()).toHaveLength(1);
   });
 
   it('should throw error when supplier not found', async () => {
@@ -62,7 +65,9 @@ describe('Update supplier unit test', () => {
       sortableFields: [],
     };
 
-    const updateSupplierUseCase = new UpdateSupplierCommandHandler(supplierRepository);
+    const updateSupplierUseCase = new UpdateSupplierCommandHandler(
+      supplierRepository,
+    );
     const supplierInput: UpdateSupplierCommand = {
       id: new Uuid().id,
       name: 'New Supplier Name',

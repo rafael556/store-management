@@ -14,7 +14,9 @@ describe('Create supplier unit test', () => {
       search: jest.fn(),
       sortableFields: [],
     };
-    const createSupplierUseCase = new CreateSupplierCommandHandler(supplierRepository);
+    const createSupplierUseCase = new CreateSupplierCommandHandler(
+      supplierRepository,
+    );
     const supplier: CreateSupplierCommand = {
       name: 'Supplier Name',
       telephone: '123456789',
@@ -31,6 +33,7 @@ describe('Create supplier unit test', () => {
     expect(newSupplier.telephone).toBe(supplier.telephone);
     expect(newSupplier.socialMedia).toBe(supplier.socialMedia);
     expect(newSupplier.isActive).toBe(true);
+    expect(createSupplierUseCase.getUncommittedEvents()).toHaveLength(1);
   });
 
   it('should throw error when saving supplier with existing name', async () => {
@@ -44,7 +47,9 @@ describe('Create supplier unit test', () => {
       search: jest.fn(),
       sortableFields: [],
     };
-    const createSupplierUseCase = new CreateSupplierCommandHandler(supplierRepository);
+    const createSupplierUseCase = new CreateSupplierCommandHandler(
+      supplierRepository,
+    );
     const supplier: CreateSupplierCommand = {
       name: 'Supplier Name',
       telephone: '123456789',
@@ -53,6 +58,8 @@ describe('Create supplier unit test', () => {
 
     // Act
     const createSupplier = createSupplierUseCase.execute(supplier);
+
+    expect(createSupplierUseCase.getUncommittedEvents()).toHaveLength(0);
 
     // Assert
     await expect(createSupplier).rejects.toThrow(

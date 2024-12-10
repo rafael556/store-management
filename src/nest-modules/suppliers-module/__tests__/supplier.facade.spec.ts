@@ -4,7 +4,10 @@ import { SupplierFacade } from '../supplier.facade';
 import { DataSource } from 'typeorm';
 import { SupplierEntity } from 'src/core/suppliers/infra/db/typeorm/suppliers.entity';
 import { CreateSupplierCommandHandler } from 'src/core/suppliers/application/command/create-supplier/create-supplier.command';
-import { CreateSupplierCommand, CreateSupplierResult } from 'src/core/suppliers/application/command/create-supplier/create-supplier.command.dto';
+import {
+  CreateSupplierCommand,
+  CreateSupplierResult,
+} from 'src/core/suppliers/application/command/create-supplier/create-supplier.command.dto';
 import { SupplierTypeOrmRepository } from 'src/core/suppliers/infra/db/typeorm/suppliers-typeorm.repository';
 import UpdateSupplierCommandHandler from 'src/core/suppliers/application/command/update-supplier/update-supplier.command';
 import { UpdateSupplierResult } from 'src/core/suppliers/application/command/update-supplier/update-supplier.command.dto';
@@ -13,6 +16,7 @@ import { ListSuppliersQueryHandler } from 'src/core/suppliers/application/query/
 import { SearchSuppliersQueryHandler } from 'src/core/suppliers/application/query/search-suppliers/search-suppliers.query';
 import { CommandBus } from 'src/core/shared/application/command.bus';
 import { QueryBus } from 'src/core/shared/application/query.bus';
+import { EventBus } from 'src/core/shared/application/event.bus';
 
 describe('SupplierFacade Integration Test', () => {
   let facade: SupplierFacade;
@@ -22,30 +26,33 @@ describe('SupplierFacade Integration Test', () => {
     const moduleRef = await Test.createTestingModule({
       imports: [
         TypeOrmModule.forRoot({
-          type: 'sqlite',
+          type: 'sqlite', // Banco em memória para testes
           database: ':memory:',
-          entities: [SupplierEntity],
-          synchronize: true,
+          entities: [SupplierEntity], // Registra a entidade de fornecedores
+          synchronize: true, // Gera o esquema automaticamente no banco em memória
         }),
-        TypeOrmModule.forFeature([SupplierEntity]),
+        TypeOrmModule.forFeature([SupplierEntity]), // Disponibiliza a entidade como repositório TypeORM
       ],
       providers: [
+        // Registro do repositório
         {
           provide: 'SupplierRepository',
           useFactory: (datasource: DataSource) =>
             new SupplierTypeOrmRepository(datasource),
-          inject: [DataSource],
+          inject: [DataSource], // Injeta o DataSource no repositório
         },
+        // Handlers de comandos
         {
           provide: CreateSupplierCommandHandler,
           useFactory: (repo) => new CreateSupplierCommandHandler(repo),
-          inject: ['SupplierRepository'],
+          inject: ['SupplierRepository'], // Injeta o repositório no handler
         },
         {
           provide: UpdateSupplierCommandHandler,
           useFactory: (repo) => new UpdateSupplierCommandHandler(repo),
           inject: ['SupplierRepository'],
         },
+        // Handlers de queries
         {
           provide: DetailSupplierQueryHandler,
           useFactory: (repo) => new DetailSupplierQueryHandler(repo),
@@ -61,20 +68,57 @@ describe('SupplierFacade Integration Test', () => {
           useFactory: (repo) => new SearchSuppliersQueryHandler(repo),
           inject: ['SupplierRepository'],
         },
+        // Bus de Comandos
         {
           provide: CommandBus,
-          useClass: CommandBus,
+          useFactory: (
+            createHandler: CreateSupplierCommandHandler,
+            updateHandler: UpdateSupplierCommandHandler,
+            eventBus: EventBus,
+          ) => {
+            const commandBus = new CommandBus(eventBus);
+            commandBus.register('Create Supplier', createHandler); // Registra handler para criar
+            commandBus.register('Update Supplier', updateHandler); // Registra handler para atualizar
+            return commandBus;
+          },
+          inject: [
+            CreateSupplierCommandHandler,
+            UpdateSupplierCommandHandler,
+            EventBus,
+          ], // Injeta handlers e o EventBus
         },
+        // Bus de Queries
         {
           provide: QueryBus,
-          useClass: QueryBus,
+          useFactory: (
+            detailHandler: DetailSupplierQueryHandler,
+            listHandler: ListSuppliersQueryHandler,
+            searchHandler: SearchSuppliersQueryHandler,
+          ) => {
+            const queryBus = new QueryBus();
+            queryBus.register('Detail Supplier', detailHandler); // Detalhes
+            queryBus.register('List Suppliers', listHandler); // Lista
+            queryBus.register('Search Suppliers', searchHandler); // Busca
+            return queryBus;
+          },
+          inject: [
+            DetailSupplierQueryHandler,
+            ListSuppliersQueryHandler,
+            SearchSuppliersQueryHandler,
+          ], // Injeta handlers de queries
+        },
+        // Event Bus (Simples para o exemplo)
+        {
+          provide: EventBus,
+          useFactory: () => new EventBus(),
         },
         SupplierFacade,
       ],
     }).compile();
 
-    facade = moduleRef.get(SupplierFacade);
-    dataSource = moduleRef.get<DataSource>(DataSource);
+    // Obtém os serviços criados para uso nos testes
+    facade = moduleRef.get(SupplierFacade); // Obtém a fachada principal
+    dataSource = moduleRef.get<DataSource>(DataSource); // Obtém a conexão do TypeORM
   });
 
   afterEach(async () => {
@@ -125,7 +169,8 @@ describe('SupplierFacade Integration Test', () => {
     };
 
     // Act
-    const newSupplier: CreateSupplierResult = await facade.createSupplier(supplier);
+    const newSupplier: CreateSupplierResult =
+      await facade.createSupplier(supplier);
 
     const updateSupplierInput = {
       id: newSupplier.supplierId,
@@ -135,7 +180,8 @@ describe('SupplierFacade Integration Test', () => {
       isActive: true,
     };
 
-    const updatedSupplier: UpdateSupplierResult = await facade.updateSupplier(updateSupplierInput);
+    const updatedSupplier: UpdateSupplierResult =
+      await facade.updateSupplier(updateSupplierInput);
 
     const savedSupplier = await dataSource
       .getRepository(SupplierEntity)
@@ -173,7 +219,8 @@ describe('SupplierFacade Integration Test', () => {
     };
 
     // Act
-    const newSupplier: CreateSupplierResult = await facade.createSupplier(supplier);
+    const newSupplier: CreateSupplierResult =
+      await facade.createSupplier(supplier);
 
     const detailSupplier = await facade.detailSupplier(newSupplier.supplierId);
 

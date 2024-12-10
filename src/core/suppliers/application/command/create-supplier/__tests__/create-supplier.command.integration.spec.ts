@@ -35,6 +35,7 @@ describe('CreateSupplier Integration Test', () => {
 
   afterEach(async () => {
     await dataSource.destroy();
+    createSupplierUseCase.uncommittedEvents = [];
   });
 
   it('should save and retrieve supplier', async () => {
@@ -59,6 +60,7 @@ describe('CreateSupplier Integration Test', () => {
     expect(savedSupplier.supplierTelephone).toBe(newSupplier.telephone);
     expect(savedSupplier.supplierSocialMedia).toBe(newSupplier.socialMedia);
     expect(savedSupplier.supplierIsActive).toBe(true);
+    expect(createSupplierUseCase.getUncommittedEvents()).toHaveLength(1);
   });
 
   it('should throw error when saving supplier with existing name', async () => {

@@ -1,7 +1,10 @@
 import { CommandHandler } from './command-handler.interface';
+import { EventBus } from './event.bus';
 
 export class CommandBus {
   private readonly handlers = new Map<string, CommandHandler<any, any>>();
+
+  constructor(private readonly eventBus: EventBus) {}
 
   register<TCommand, TResult>(
     commandName: string,
@@ -20,6 +23,12 @@ export class CommandBus {
       throw new Error(`No handler registered for identifier ${identifier}`);
     }
 
-    return handler.execute(command);
+    const result = await handler.execute(command);
+
+    if (handler.getUncommittedEvents().length) {
+      await this.eventBus.publishAll(handler.getUncommittedEvents());
+    }
+
+    return result;
   }
 }

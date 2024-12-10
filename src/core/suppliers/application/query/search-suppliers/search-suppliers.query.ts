@@ -14,9 +14,7 @@ export class SearchSuppliersQueryHandler
 {
   constructor(private readonly supplierRepository: ISupplierRepository) {}
 
-  async execute(
-    query: SearchSuppliersQuery,
-  ): Promise<SearchSuppliersResult> {
+  async execute(query: SearchSuppliersQuery): Promise<SearchSuppliersResult> {
     const input = new SupplierSearchParams({
       filter: query.filter,
       page: query.page,

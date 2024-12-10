@@ -1,5 +1,7 @@
+import { IDomainEvent } from '../../domain/domain-event.interface';
 import { CommandHandler } from '../command-handler.interface';
 import { CommandBus } from '../command.bus';
+import { EventBus } from '../event.bus';
 
 describe('CommandBus', () => {
   class TestCommand {
@@ -7,15 +9,40 @@ describe('CommandBus', () => {
   }
 
   class TestCommandHandler implements CommandHandler<TestCommand, string> {
+    uncommittedEvents: IDomainEvent[] = [];
+    getUncommittedEvents(): IDomainEvent[] {
+      return this.uncommittedEvents;
+    }
+
     async execute(command: TestCommand): Promise<string> {
       return `Handled: ${command.payload}`;
     }
   }
 
+  class EventCommandHandler implements CommandHandler<TestCommand, string> {
+    uncommittedEvents: any[] = [];
+
+    async execute(command: TestCommand): Promise<string> {
+      this.uncommittedEvents.push({
+        event: 'TestEvent',
+        data: command.payload,
+      });
+      return `Handled with Event: ${command.payload}`;
+    }
+
+    getUncommittedEvents() {
+      return this.uncommittedEvents;
+    }
+  }
+
   let commandBus: CommandBus;
+  let mockEventBus: jest.Mocked<EventBus>;
 
   beforeEach(() => {
-    commandBus = new CommandBus();
+    mockEventBus = {
+      publishAll: jest.fn(),
+    } as any;
+    commandBus = new CommandBus(mockEventBus);
   });
 
   it('should register a handler for a command', () => {
@@ -58,5 +85,31 @@ describe('CommandBus', () => {
     commandBus.register('TestCommand', handler2);
 
     expect(commandBus['handlers'].get('TestCommand')).toBe(handler2);
+  });
+
+  it('should publish events after executing a handler with uncommitted events', async () => {
+    const handler = new EventCommandHandler();
+    const spy = jest.spyOn(handler, 'getUncommittedEvents');
+    commandBus.register('TestCommand', handler);
+
+    const command = new TestCommand('Event Payload');
+    const result = await commandBus.execute('TestCommand', command);
+
+    expect(result).toBe('Handled with Event: Event Payload');
+    expect(spy).toHaveBeenCalled();
+    expect(mockEventBus.publishAll).toHaveBeenCalledWith(
+      handler.getUncommittedEvents(),
+    );
+  });
+
+  it('should not call publishAll if handler has no uncommitted events', async () => {
+    const handler = new TestCommandHandler();
+    commandBus.register('TestCommand', handler);
+
+    const command = new TestCommand('No Events');
+    const result = await commandBus.execute('TestCommand', command);
+
+    expect(result).toBe('Handled: No Events');
+    expect(mockEventBus.publishAll).not.toHaveBeenCalled();
   });
 });
